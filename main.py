@@ -27,6 +27,7 @@ def webScrape(url):
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
     with webdriver.Chrome(options=chrome_options) as driver:
+        print('scraping')
         driver.get(url)
         names = driver.find_elements(By.CLASS_NAME, 'main-heading')
         prices = driver.find_elements(By.CLASS_NAME, 'smaller')
