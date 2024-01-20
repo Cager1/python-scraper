@@ -1,12 +1,21 @@
 from concurrent.futures import ThreadPoolExecutor
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def webScrape(url):
@@ -40,7 +49,6 @@ def scrape_all(urls):
 
 
 def scraping(urls):
-
     names, prices = scrape_all(urls)
     macs = {}
 
@@ -72,7 +80,6 @@ async def root(info: Request):
     urls = [f"{base_url}&page={i}" for i in range(1, 11)]
     return scraping(urls)
 
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
