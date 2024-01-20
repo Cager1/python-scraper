@@ -21,6 +21,7 @@ app.add_middleware(
 def webScrape(url):
     chrome_options = ChromeOptions()
     chrome_options.use_chromium = True
+    chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
