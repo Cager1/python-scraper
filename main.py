@@ -79,11 +79,10 @@ def scraping(urls):
 @app.post("/scrape")
 async def root(info: Request):
     data = await info.json()
-    return {"message": data}
     # make urls list of items that are url + page number (1-10)
-    # base_url = data['url']
-    # urls = [f"{base_url}&page={i}" for i in range(1, 11)]
-    # return scraping(urls)
+    base_url = data['url']
+    urls = [f"{base_url}&page={i}" for i in range(1, 11)]
+    return scraping(urls)
 
 @app.get("/")
 async def root():
