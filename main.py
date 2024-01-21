@@ -22,6 +22,7 @@ def webScrape(url):
     chrome_options = ChromeOptions()
     chrome_options.add_argument('--no-sandbox')
     chrome_options.use_chromium = True
+    chrome_options.add_argument("--remote-debugging-port=9222")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--user-data-dir=/home/cager')
@@ -78,11 +79,11 @@ def scraping(urls):
 @app.post("/scrape")
 async def root(info: Request):
     data = await info.json()
-
+    return {"message": data}
     # make urls list of items that are url + page number (1-10)
-    base_url = data['url']
-    urls = [f"{base_url}&page={i}" for i in range(1, 11)]
-    return scraping(urls)
+    # base_url = data['url']
+    # urls = [f"{base_url}&page={i}" for i in range(1, 11)]
+    # return scraping(urls)
 
 @app.get("/")
 async def root():
