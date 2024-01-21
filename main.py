@@ -21,14 +21,13 @@ app.add_middleware(
 def webScrape(url):
     chrome_options = ChromeOptions()
     chrome_options.add_argument('--no-sandbox')
-    chrome_options.use_chromium = True
     chrome_options.add_argument("--remote-debugging-port=9222")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--user-data-dir=/home/cager')
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
-    with webdriver.Chrome(options=chrome_options) as driver:
+    with webdriver.Edge(options=chrome_options) as driver:
         print('scraping')
         driver.get(url)
         names = driver.find_elements(By.CLASS_NAME, 'main-heading')
