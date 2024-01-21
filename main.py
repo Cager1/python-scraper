@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.edge.options import Options as FirefoxOptions
 
 app = FastAPI()
 
@@ -23,7 +23,7 @@ def webScrape(url):
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
-    with webdriver.Firefox(options=chrome_options) as driver:
+    with webdriver.Edge(options=chrome_options) as driver:
         print('scraping')
         driver.get(url)
         names = driver.find_elements(By.CLASS_NAME, 'main-heading')
