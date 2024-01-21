@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 app = FastAPI()
 
@@ -19,15 +19,11 @@ app.add_middleware(
 
 
 def webScrape(url):
-    chrome_options = ChromeOptions()
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--remote-debugging-pipe')
-    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options = FirefoxOptions()
     chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--user-data-dir=/home/cager')
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
-    with webdriver.Edge(options=chrome_options) as driver:
+    with webdriver.Firefox(options=chrome_options) as driver:
         print('scraping')
         driver.get(url)
         names = driver.find_elements(By.CLASS_NAME, 'main-heading')
