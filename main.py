@@ -21,6 +21,7 @@ app.add_middleware(
 def webScrape(url):
     chrome_options = ChromeOptions()
     chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--remote-debugging-pipe')
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--user-data-dir=/home/cager')
