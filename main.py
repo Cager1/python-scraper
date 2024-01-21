@@ -24,6 +24,7 @@ def webScrape(url):
     chrome_options.use_chromium = True
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--user-data-dir=/home/cager')
     chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 
     with webdriver.Chrome(options=chrome_options) as driver:
