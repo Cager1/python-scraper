@@ -31,7 +31,6 @@ def webScrape(url):
     driver.get(url)
     names = driver.find_elements(By.CLASS_NAME, 'main-heading')
     prices = driver.find_elements(By.CLASS_NAME, 'smaller')
-    driver.quit()
 
     return [name.text for name in names], [price.text for price in prices]
 
