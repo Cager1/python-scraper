@@ -2,10 +2,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options as FirefoxOptions
+from webdriver_manager.chrome import ChromeDriverManager
 
 app = FastAPI()
 
@@ -19,20 +21,18 @@ app.add_middleware(
 
 
 def webScrape(url):
-    chrome_options = FirefoxOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--remote-debugging-port=9222')
-    chrome_options.add_argument('--blink-settings=imagesEnabled=false')
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
-    with webdriver.Edge(options=chrome_options) as driver:
-        print('scraping')
-        driver.get(url)
-        names = driver.find_elements(By.CLASS_NAME, 'main-heading')
-        prices = driver.find_elements(By.CLASS_NAME, 'smaller')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    print('scraping')
+    driver.get(url)
+    names = driver.find_elements(By.CLASS_NAME, 'main-heading')
+    prices = driver.find_elements(By.CLASS_NAME, 'smaller')
 
-        return [name.text for name in names], [price.text for price in prices]
+    return [name.text for name in names], [price.text for price in prices]
 
 
 def scrape_all(urls):
