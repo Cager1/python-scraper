@@ -72,7 +72,7 @@ def scraping(urls):
     most_expensive = max(macs, key=macs.get)
     least_expensive = min(macs, key=macs.get)
     average = sum(macs.values()) / len(macs)
-    return {"most_expensive": most_expensive, "least_expensive": least_expensive, "average": average, "items": macs}
+    return {"most_expensive": most_expensive, "least_expensive": least_expensive, "average": average}
 
 
 @app.post("/scrape")
